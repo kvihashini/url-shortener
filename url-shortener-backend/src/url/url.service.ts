@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { Url } from "./schemas/url.schema";
-import { UrlRepository } from "./url.repository";
+import { Injectable } from '@nestjs/common';
+import { Url } from './schemas/url.schema';
+import { UrlRepository } from './url.repository';
 
 /**
  * Service class
@@ -11,7 +11,7 @@ export class UrlService {
     constructor(private readonly urlRepository: UrlRepository) {}
 
     async createUrl(url: string): Promise<Url> {
-        const shortUrl = "testurl";
+        const shortUrl = 'testurl';
         const newUrl = this.urlRepository.createUrl({
             origUrl: url,
             shortUrl: shortUrl
@@ -20,8 +20,7 @@ export class UrlService {
     }
 
     async findUrl(shortUrl: string): Promise<Url> {
-        const url = await this.urlRepository.findUrl({ shortUrl });
+        const url = this.urlRepository.findUrl({ shortUrl });
         return url;
     }
-
 }

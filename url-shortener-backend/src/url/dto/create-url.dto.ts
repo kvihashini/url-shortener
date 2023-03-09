@@ -1,4 +1,4 @@
 export class CreateUrlDto {
-    origUrl: string
-    shortUrl: string
+    origUrl: string;
+    shortUrl: string;
 }
