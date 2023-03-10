@@ -21,7 +21,9 @@ export class UrlController {
 
     @Post('/shorten')
     async createUrl(@Body() createUrlDto: CreateUrlDto): Promise<Url> {
-        const shortUrl = await this.urlService.createUrl(createUrlDto.origUrl);
+        const shortUrl = await this.urlService.getShortUrl(
+            createUrlDto.origUrl
+        );
         return shortUrl;
     }
 
@@ -35,7 +37,7 @@ export class UrlController {
         @Param('shortUrl') shortUrl: string,
         @Req() req: Request
     ): Promise<Url> {
-        const originalUrl = await this.urlService.findUrl(shortUrl);
+        const originalUrl = await this.urlService.getLongUrl(shortUrl);
         return originalUrl;
     }
 }

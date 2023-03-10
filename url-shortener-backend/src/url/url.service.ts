@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Url } from './schemas/url.schema';
 import { UrlRepository } from './url.repository';
+import { nanoid } from 'nanoid';
 
 /**
  * Service class
@@ -10,17 +11,31 @@ import { UrlRepository } from './url.repository';
 export class UrlService {
     constructor(private readonly urlRepository: UrlRepository) {}
 
-    async createUrl(url: string): Promise<Url> {
-        const shortUrl = 'testurl';
+    async getShortUrl(origUrl: string): Promise<Url> {
+        // check if origUrl already exists in the database
+        const existingUrl = await this.urlRepository.findUrl({ origUrl });
+
+        if (existingUrl) {
+            return existingUrl;
+        }
+
+        // else, create a new shortUrl
+        const randId = nanoid(7);
         const newUrl = this.urlRepository.createUrl({
-            origUrl: url,
-            shortUrl: shortUrl
+            origUrl: origUrl,
+            shortUrl: randId //`${process.env.BASE_URL}/${randId}`
         });
+
         return newUrl;
     }
 
-    async findUrl(shortUrl: string): Promise<Url> {
-        const url = this.urlRepository.findUrl({ shortUrl });
-        return url;
+    async getLongUrl(shortUrl: string): Promise<Url> {
+        const existingUrl = await this.urlRepository.findUrl({ shortUrl });
+
+        if (existingUrl) {
+            return existingUrl;
+        }
+
+        throw new Error('URL not found');
     }
 }
