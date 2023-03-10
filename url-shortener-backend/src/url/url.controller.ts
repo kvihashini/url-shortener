@@ -32,12 +32,12 @@ export class UrlController {
      * Handles GET requests to the /url/find endpoint
      */
 
-    @Get(':shortUrl')
+    @Get(':shortId')
     async findUrl(
-        @Param('shortUrl') shortUrl: string,
+        @Param('shortId') shortId: string,
         @Req() req: Request
     ): Promise<Url> {
-        const originalUrl = await this.urlService.getLongUrl(shortUrl);
+        const originalUrl = await this.urlService.getLongUrl(shortId);
         return originalUrl;
     }
 }

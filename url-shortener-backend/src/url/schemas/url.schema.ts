@@ -13,6 +13,9 @@ export class Url {
 
     @Prop({ required: true })
     shortUrl: string;
+
+    @Prop({ required: true })
+    shortId: string;
 }
 
 // Creation of Mongoose schema

@@ -23,14 +23,15 @@ export class UrlService {
         const randId = nanoid(7);
         const newUrl = this.urlRepository.createUrl({
             origUrl: origUrl,
-            shortUrl: randId //`${process.env.BASE_URL}/${randId}`
+            shortUrl: `${process.env.BASE_URL}/${randId}`,
+            shortId: `${randId}`
         });
 
         return newUrl;
     }
 
-    async getLongUrl(shortUrl: string): Promise<Url> {
-        const existingUrl = await this.urlRepository.findUrl({ shortUrl });
+    async getLongUrl(shortId: string): Promise<Url> {
+        const existingUrl = await this.urlRepository.findUrl({ shortId });
 
         if (existingUrl) {
             return existingUrl;

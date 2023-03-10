@@ -29,8 +29,9 @@ function CreateShortURL() {
 		return axios
 			.post(`http://localhost:3001/url/shorten`, { origUrl: longUrl })
 			.then((response) => {
-				setShortId(response.data.shortUrl);
-				const shortUrl = `http://localhost:3001/url/${response.data.shortUrl}`;
+				console.log(response.data);
+				setShortId(response.data.shortId);
+				const shortUrl = `${response.data.shortUrl}`;
 				return shortUrl;
 			})
 			.catch((error) => {
@@ -60,7 +61,7 @@ function CreateShortURL() {
 						margin-left="10px"
 						size="large"
 						variant="outlined"
-						on
+						on="true"
 						type="submit"
 					>
 						Shorten URL
